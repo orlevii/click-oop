@@ -101,7 +101,7 @@ class PydanticClickAdapter:
             if k not in {"default", "is_flag", "flag_value", "help"}
         }
 
-        switch_params = []
+        switch_params: list[click.Parameter] = []
         for e in enum_values:
             help_msg = param_kwargs.get("help", f'Set "{self.field_name}" to {e.value}')
             param = param_cls(
