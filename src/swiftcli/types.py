@@ -7,7 +7,16 @@ import click
 from typing_extensions import TypeVar, Unpack
 
 if TYPE_CHECKING:
-    from click_oop._click_types import ClickArgumentFields, ClickOptionFields
+    from swiftcli._click_types import ClickArgumentFields, ClickOptionFields
+
+__all__ = [
+    "Argument",
+    "ArgumentSettings",
+    "Flag",
+    "Option",
+    "OptionSettings",
+    "Switch",
+]
 
 
 class OptionSettings:
@@ -35,7 +44,7 @@ class ArgumentSettings:
 T = TypeVar("T")
 E = TypeVar("E", bound=Enum)
 
+Argument = Annotated[T, ArgumentSettings()]
 Option = Annotated[T, OptionSettings()]
 Flag = Annotated[bool, OptionSettings(is_flag=True, default=False)]
-Argument = Annotated[T, ArgumentSettings()]
 Switch = Annotated[E, OptionSettings(is_flag=True)]

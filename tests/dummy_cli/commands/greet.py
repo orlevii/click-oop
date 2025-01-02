@@ -1,6 +1,7 @@
 from typing import Annotated
 
-from click_oop import BaseCommand, Option, OptionSettings
+from swiftcli import BaseCommand
+from swiftcli.types import Option, OptionSettings
 from tests.dummy_cli.logger import logger
 
 from .common_params import CommonParams

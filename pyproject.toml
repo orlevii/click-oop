@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "click-oop"
+name = "swiftcli"
 version = "0.1.0"
-description = "Build CLI apps with click using object-oriented programming."
+description = "Build testable CLI apps with `click` and `pydantic`"
 authors = ["Or Levi <orlevi128@gmail.com>"]
 license = "MIT"
 readme = "README.md"
@@ -21,8 +21,8 @@ ipdb = "^0.13.13"
 [tool.poe.tasks]
 lint = "ruff check src tests"
 format = "ruff format src tests"
-test = "pytest"
-mypy = "mypy -p click_oop -p tests"
+test = "pytest -v"
+mypy = "mypy -p swiftcli -p tests"
 
 [build-system]
 requires = ["poetry-core"]

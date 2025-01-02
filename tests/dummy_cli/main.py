@@ -2,7 +2,7 @@ from typing import Any
 
 import click
 
-from click_oop import Group
+from swiftcli import Group
 from tests.dummy_cli.commands.greet import GreetCommand
 
 

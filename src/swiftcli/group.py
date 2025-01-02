@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Any
 import click
 
 if TYPE_CHECKING:
-    from click_oop.command import BaseCommand
+    from swiftcli.command import BaseCommand
 
 
 class Group(click.Group):

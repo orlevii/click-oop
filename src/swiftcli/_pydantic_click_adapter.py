@@ -75,9 +75,11 @@ class PydanticClickAdapter:
             return default.value
         return default
 
-    @staticmethod
-    def _to_click_type(annotation: type | None) -> click.ParamType:
+    @classmethod
+    def _to_click_type(cls, annotation: type | None) -> click.ParamType:
         assert annotation is not None, "Annotation is required"
+        if cls._is_multiple_types(annotation):
+            return click.STRING
         if issubclass(annotation, bool):
             return click.BOOL
         elif issubclass(annotation, int):
@@ -89,6 +91,8 @@ class PydanticClickAdapter:
         return click.STRING
 
     def _is_feature_switch(self) -> bool:
+        if self._is_multiple_types(self.field_type):
+            return False
         is_flag = bool(self.metadata.kwargs.get("is_flag"))
         is_enum = issubclass(self.field_type, Enum)
         return is_flag and is_enum
@@ -117,3 +121,7 @@ class PydanticClickAdapter:
             switch_params.append(param)
 
         return switch_params
+
+    @classmethod
+    def _is_multiple_types(cls, annotation: type) -> bool:
+        return bool(getattr(annotation, "__args__", None))
