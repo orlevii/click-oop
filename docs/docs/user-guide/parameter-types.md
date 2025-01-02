@@ -54,9 +54,9 @@ class MyParams(BaseModel):
     log_level: Switch[LogLevel] = LogLevel.INFO  # Creates --debug, --info, --error flags
 ```
 
-## Option Customization
+## Advanced Argument Settings
 
-Options can be customized using `OptionSettings`:
+Options and Arguments can be customized using `OptionSettings`/`ArgumentsSettings`:
 
 ```python
 from typing import Annotated
