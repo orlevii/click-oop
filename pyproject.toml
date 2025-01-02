@@ -30,8 +30,8 @@ test = "pytest -v"
 mypy = "mypy -p swiftcli -p tests"
 
 # docs
-'docs:build' = "mkdocs build"
-'docs:serve' = "mkdocs serve"
+"docs:build".shell = "cd docs && mkdocs build"
+"docs:serve".shell = "cd docs && mkdocs serve"
 
 [build-system]
 requires = ["poetry-core"]
