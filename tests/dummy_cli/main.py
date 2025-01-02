@@ -20,7 +20,7 @@ cli = Group(
             ["--version", "-V"],
             is_flag=True,
             callback=print_version,
-            help="Display realm version",
+            help="Display cli version",
         )
     ]
 )
