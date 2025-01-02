@@ -8,13 +8,12 @@ from typing import (
     Generic,
     Optional,
     TypedDict,
-    TypeVar,
     cast,
 )
 
 import click
 from pydantic import BaseModel, ValidationError
-from typing_extensions import NotRequired
+from typing_extensions import NotRequired, TypeVar
 
 from click_oop._pydantic_click_adapter import PydanticClickAdapter
 from click_oop.utils import strip_indent
@@ -24,7 +23,7 @@ if TYPE_CHECKING:
 
     from pydantic.fields import FieldInfo
 
-ParamsType = TypeVar("ParamsType", bound=BaseModel)
+ParamsType = TypeVar("ParamsType", bound=BaseModel, default=BaseModel)
 
 
 class CommandConfig(TypedDict):
@@ -45,7 +44,7 @@ class BaseCommand(Generic[ParamsType]):
     COMMAND_CLS: type[click.Command] = click.Command
     CONFIG: CommandConfig = {}
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any):
         params_schema_cls = self.__get_parameters_type()
         try:
             self.params: ParamsType = params_schema_cls(**kwargs)
@@ -56,7 +55,7 @@ class BaseCommand(Generic[ParamsType]):
 
     @classmethod
     def to_command(cls) -> click.Command:
-        def callback_fn(**kwargs) -> None:
+        def callback_fn(**kwargs: Any) -> None:
             cmd = cls(**kwargs)
             return cmd.run()
 
@@ -95,4 +94,4 @@ class BaseCommand(Generic[ParamsType]):
         if not args or args[0] == ParamsType:  # type: ignore[misc]
             raise RuntimeError("Could not find parameters")
 
-        return args[0]
+        return args[0]  # type: ignore[no-any-return]

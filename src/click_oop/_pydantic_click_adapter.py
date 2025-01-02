@@ -12,6 +12,8 @@ from .types import ArgumentSettings, OptionSettings
 if TYPE_CHECKING:
     from pydantic.fields import FieldInfo
 
+StrDict = dict[str, Any]
+
 
 class PydanticClickAdapter:
     def __init__(self, field_name: str, field_info: FieldInfo):
@@ -38,7 +40,7 @@ class PydanticClickAdapter:
         param_decls = self._get_default_param_decls()
         param_cls = self.metadata.cls_type
 
-        param_kwargs = cast(dict, self.metadata.kwargs.copy())
+        param_kwargs = cast(StrDict, self.metadata.kwargs.copy())
         param_kwargs.pop("param_decls", None)
         param_kwargs["required"] = self.field_info.default == PydanticUndefined
         param_kwargs["default"] = self._get_field_default_value()
@@ -91,7 +93,7 @@ class PydanticClickAdapter:
         is_enum = issubclass(self.field_type, Enum)
         return is_flag and is_enum
 
-    def _create_switch_params(self, param_kwargs: dict) -> list[click.Parameter]:
+    def _create_switch_params(self, param_kwargs: StrDict) -> list[click.Parameter]:
         param_cls = self.metadata.cls_type
         enum_values = list(cast(type[Enum], self.field_type))
 

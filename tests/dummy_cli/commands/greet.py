@@ -1,11 +1,12 @@
 from typing import Annotated
 
-from pydantic import BaseModel
-
 from click_oop import BaseCommand, Option, OptionSettings
+from tests.dummy_cli.logger import logger
+
+from .common_params import CommonParams
 
 
-class GreetCommandParams(BaseModel):
+class GreetCommandParams(CommonParams):
     name: Option[str]
     birth_place: Annotated[str, OptionSettings(aliases=["-b"])] = "USA"
 
@@ -13,5 +14,9 @@ class GreetCommandParams(BaseModel):
 class GreetCommand(BaseCommand[GreetCommandParams]):
     NAME = "greet"
 
-    def run(self):
+    def run(self) -> None:
+        print(self.params)
         print("Hello,", self.params.name, "from", self.params.birth_place)
+        logger.warning("WARN")
+        logger.info("INFO")
+        logger.debug("DEBUG")
